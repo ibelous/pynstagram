@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserModel
+from .models import UserModel, PostModel
 from django.contrib.auth.models import User
 
 

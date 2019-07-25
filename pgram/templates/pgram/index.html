@@ -1,7 +1,6 @@
-{% load static %}
+{% extends 'pgram/base.html' %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'pgram/style.css' %}">
-
+{% block body_block %}
 {% if latest_post_list %}
     <div class="post-all">
     {% for post in latest_post_list %}
@@ -15,3 +14,4 @@
 {% else %}
     <p class="no-posts">No posts are available.</p>
 {% endif %}
+{% endblock %}

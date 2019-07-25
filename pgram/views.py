@@ -1,6 +1,6 @@
 from django.views import generic
 from django.utils import timezone
-from .models import Post
+from .models import PostModel
 from django.shortcuts import render
 from .forms import UserForm, UserProfileInfoForm
 from django.contrib.auth import authenticate, login, logout
@@ -18,7 +18,7 @@ class IndexView(generic.ListView):
         Return the last five published questions (not including those set to be
         published in the future).
         """
-        return Post.objects.filter(
+        return PostModel.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:10]
 
@@ -31,7 +31,7 @@ def special(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('pgram:index'))
 
 
 class RegistrationView(generic.CreateView):
