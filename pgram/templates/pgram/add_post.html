@@ -1,0 +1,17 @@
+{% extends 'pgram/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Add Post :</h1>
+        <form enctype="multipart/form-data" method="post" action="{% url 'pgram:add_post' %}" >
+          {% csrf_token %}
+          {# A more "HTML" way of creating the login form#}
+          <label for="image">Image:</label>
+          <input type="file" name="image" placeholder="Image" accept="image/*">
+          <label for="desc">Description:</label>
+          <input type="text" name="desc" placeholder="Description">
+          <input type="submit" name="" value="Add Post">
+        </form>
+</div>
+  </div>
+{% endblock %}

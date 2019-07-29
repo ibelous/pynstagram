@@ -5,7 +5,12 @@
     <div class="post-all">
     {% for post in latest_post_list %}
         <div class="post-template">
-            <h3 class="post-author-date">{{ post.author }}, {{ post.pub_date }}</h3>
+            <div class="post-info">
+                {% if post.author.usermodel.profile_pic %}
+                    <img src="{{ post.author.usermodel.profile_pic.url }}" class="profile-image">
+                {% endif %}
+                <h3 class="post-author-date">{{ post.author }}, {{ post.pub_date }}</h3>
+            </div>
             <img src="{{ post.image.url }}" class="post-image">
             <p class="post-description">{{ post.desc }}</p>
         </div>

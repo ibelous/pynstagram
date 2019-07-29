@@ -82,3 +82,20 @@ def user_login(request):
             return HttpResponse("Invalid login details given")
     else:
         return render(request, 'pgram/login.html', {})
+
+
+def add_post(request):
+    if request.method == 'POST':
+        image = request.FILES.get('image')
+        desc = request.POST.get('desc')
+        user = request.user
+        if user:
+            PostModel.objects.create(author=user, image=image, desc=desc)
+            user.usermodel.all_posts_count += 1
+            user.usermodel.current_posts_count += 1
+            return HttpResponseRedirect(reverse('pgram:index'))
+        else:
+            print("Someone tried to add post and failed.")
+            return HttpResponse("You need to log in first")
+    else:
+        return render(request, 'pgram/add_post.html', {})

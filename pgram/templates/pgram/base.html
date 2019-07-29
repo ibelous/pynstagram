@@ -15,11 +15,12 @@
 {# Django Home Link / Admin Link / Register Link#}
           <li><a class="navbar-brand" href="{% url 'pgram:index' %}">Pynstagram</a></li>
           <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
-          <li><a class="navbar-link" href="{% url 'pgram:registration' %}">Register</a></li>
           {# Some logic on what to display for last item#}
           {% if user.is_authenticated %}
               <li><a href="{% url 'pgram:logout' %}">Logout</a></li>
+              <li><a href="{% url 'pgram:add_post' %}">Add Post</a></li>
           {% else %}
+            <li><a class="navbar-link" href="{% url 'pgram:registration' %}">Register</a></li>
             <li><a class="navbar-link" href="{% url 'pgram:user_login' %}">Login</a></li>
           {% endif %}
 </ul>
