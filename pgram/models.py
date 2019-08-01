@@ -8,10 +8,14 @@ app_name = 'pgram'
 
 
 class PostModel(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='author', on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='author', on_delete=models.CASCADE,
+                               related_name='posts')
     image = models.ImageField(verbose_name='Select Image', upload_to='photos')
     pub_date = models.DateTimeField(verbose_name='Publish date', default=timezone.now())
     desc = models.TextField(verbose_name='Description', max_length=2000, blank=True)
+
+    def get_comments(self):
+        return self.comments.values_list('text', flat=True)
 
 
 class UserModel(models.Model):
@@ -25,3 +29,11 @@ class UserModel(models.Model):
 
     def get_all_posts_count(self):
         return self.all_posts_count
+
+
+class CommentModel(models.Model):
+    post = models.ForeignKey('pgram.PostModel', on_delete=models.CASCADE, verbose_name='Post', related_name='comments')
+    author = models.ForeignKey('pgram.UserModel', on_delete=models.CASCADE, verbose_name='Author',
+                               related_name='comments')
+    text = models.TextField(verbose_name='Comment', max_length=500)
+    pub_date = models.DateTimeField(verbose_name='Publish Date', default=timezone.now())

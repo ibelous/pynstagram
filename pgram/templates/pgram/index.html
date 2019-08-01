@@ -13,6 +13,11 @@
             </div>
             <img src="{{ post.image.url }}" class="post-image">
             <p class="post-description">{{ post.desc }}</p>
+            <div class="post-comments">
+                {% for comment in post.get_comments %}
+                    <p class="comment">comment</p>
+                {% endfor %}
+            </div>
         </div>
     {% endfor %}
     </div>
