@@ -1,0 +1,37 @@
+{% extends 'pgram/base.html' %}
+{% block body_block %}
+    <div class="post-template">
+        <div class="post-info">
+            {% if post.author.usermodel.profile_pic %}
+                <a href="{% url 'pgram:detail' post.id %}"><img src="{{ post.author.usermodel.profile_pic.url }}"
+                                                                class="profile-image"></a>
+            {% endif %}
+            <h3 class="post-author-date">{{ post.author }}, {{ post.pub_date }}</h3>
+        </div>
+        <img src="{{ post.image.url }}" class="post-image">
+        {% if post.desc %}
+        <p class="post-description">{{ post.desc }}</p>
+        {% endif %}
+        {% if user.is_authenticated or post.get_comments %}
+        <div class="post-comments">
+            {% for comment in post.get_comments %}
+                <div class="comment">
+                <p class="comment-author">{{ comment.author }}: </p>
+                <p class="comment-text">{{ comment.text }}</p>
+                <p class="comment-pub-date">{{ comment.pub_date }}</p>
+                </div>
+            {% endfor %}
+            {% if user.is_authenticated %}
+            <div class="add-comment">
+                <form method="post" action="{% url 'pgram:add_comment' %}" >
+                  {% csrf_token %}
+                    <input type="hidden" name="post" value="{{ post.id }}" />
+                    <textarea name="text" placeholder="Comment" maxlength="500" class="add-comment-text"></textarea>
+                  <input type="submit" name="" value="Add Comment">
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

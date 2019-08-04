@@ -39,3 +39,25 @@
 .post-info {
     display: flex;
 }
+
+.post-comments {
+    margin: 5px 10px;
+    border: 1px solid lightgray;
+}
+
+.comment {
+    display: flex;
+    margin: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-pub-date {
+    font-size: 10px;
+}
+
+.add-comment-text {
+    width: 100%;
+}

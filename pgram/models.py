@@ -15,12 +15,12 @@ class PostModel(models.Model):
     desc = models.TextField(verbose_name='Description', max_length=2000, blank=True)
 
     def get_comments(self):
-        return self.comments.values_list('text', flat=True)
+        return self.comments.all()
 
 
 class UserModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_pic = models.ImageField(upload_to='profile_pics', blank=True)
+    profile_pic = models.ImageField(verbose_name='Profile Picture', upload_to='profile_pics', blank=True)
     all_posts_count = models.IntegerField(verbose_name='Posts count(All time)', default=0)
     current_posts_count = models.IntegerField(verbose_name='Posts count', default=0)
 

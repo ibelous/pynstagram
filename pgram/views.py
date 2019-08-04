@@ -1,6 +1,6 @@
 from django.views import generic
 from django.utils import timezone
-from .models import PostModel
+from .models import PostModel, CommentModel
 from django.shortcuts import render
 from .forms import UserForm, UserProfileInfoForm
 from django.contrib.auth import authenticate, login, logout
@@ -21,6 +21,15 @@ class IndexView(generic.ListView):
         return PostModel.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:10]
+
+
+#TODO: fix Detail View
+class DetailView(generic.DetailView()):
+    model = PostModel
+    template_name = 'pgram/detail.html'
+
+    def get_queryset(self):
+        return PostModel.objects.filter(pub_date__lte=timezone.now())
 
 
 @login_required
@@ -99,3 +108,15 @@ def add_post(request):
             return HttpResponse("You need to log in first")
     else:
         return render(request, 'pgram/add_post.html', {})
+
+
+def add_comment(request):
+    if request.method == 'POST':
+        text = request.POST.get('text')
+        author = request.user.usermodel
+        post_obj = request.POST.get('post')
+        post = PostModel.objects.get(id=post_obj)
+        CommentModel.objects.create(author=author, text=text, post=post)
+        return HttpResponseRedirect(reverse('pgram:index'))
+    else:
+        return HttpResponseRedirect(reverse('pgram:index'))

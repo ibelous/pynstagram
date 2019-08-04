@@ -10,4 +10,6 @@ urlpatterns = [
     path('user_login/', views.user_login, name='user_login'),
     path('logout/', views.user_logout, name='logout'),
     path('add_post/', views.add_post, name='add_post'),
+    path('add_comment/', views.add_comment, name='add_comment'),
+    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
 ]
